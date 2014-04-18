@@ -3,10 +3,6 @@ from br_player_finder import *
 
 app = Flask(__name__) 
 
-
-
-
-
 @app.route("/")
 def get_index():
     index = open("static/index.html")
@@ -18,9 +14,6 @@ def get_index():
 @app.route("/player_search/")
 def player_search():
     player = request.args.get('player')
-    if player[0] == " ":
-        player = player[1:]
-
     page = get_player_page(player)
     return page
 
