@@ -1,5 +1,5 @@
 from flask import Flask, url_for, request, render_template
-from br_player_finder import *
+from player_scraper.br_player_finder import *
 
 app = Flask(__name__) 
 

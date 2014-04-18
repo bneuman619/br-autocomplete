@@ -1,11 +1,16 @@
 from soupify import soupify, get_url_content
 
+
+def get_player_soup(player_name):
+    url = get_player_url(player_name)
+    soup = soupify(url)
+    return soup
+    
 def get_player_page(player_name):
     url = get_player_url(player_name)
     content = get_url_content(url)
     return content
 
-    
 def get_first_letter_of_last_name(player_name):
     last_name = player_name.split(" ")[-1]
     return last_name[0].lower()
