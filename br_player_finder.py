@@ -35,9 +35,6 @@ def get_player_page(player_name):
     return content
 
 def player_link_finder(name):
-    if name[0] == " ":
-        name = name[1:]
-
     def link_finder(element):
         return (element.name == 'a') and (element.text.lower() == name.lower())
    

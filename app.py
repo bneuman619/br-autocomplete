@@ -13,7 +13,7 @@ def get_index():
 
 @app.route("/player_search/")
 def player_search():
-    player = request.args.get('player')
+    player = request.args.get('player').strip()
     page = get_player_page(player)
     return page
 
