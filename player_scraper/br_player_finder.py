@@ -1,17 +1,11 @@
-from bs4 import BeautifulSoup as bs
-import httplib2
+from soupify import soupify, get_url_content
 
-def soupify(url):
+def get_player_page(player_name):
+    url = get_player_url(player_name)
     content = get_url_content(url)
-    soup = bs(content)
-    return soup
-
-def get_url_content(url):
-    h = httplib2.Http()
-    resp, content = h.request(url)
     return content
 
-
+    
 def get_first_letter_of_last_name(player_name):
     last_name = player_name.split(" ")[-1]
     return last_name[0].lower()
@@ -29,10 +23,7 @@ def get_player_url(player_name):
     absolute_url = "http://basketball-reference.com" + relative_link
     return absolute_url
 
-def get_player_page(player_name):
-    url = get_player_url(player_name)
-    content = get_url_content(url)
-    return content
+
 
 def player_link_finder(name):
     def link_finder(element):
