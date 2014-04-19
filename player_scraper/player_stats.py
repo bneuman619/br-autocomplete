@@ -16,7 +16,7 @@ class PlayerStats:
         return "Player: " + self.name + "\n" + "Stats tables: " + ' '.join(self.table_names())
 
     def table_names(self):
-        return map(lambda x: x.name, self.tables)
+        return self.tables.keys()
 
     def stats(self):
         return ' '.join(self.totals.indices())

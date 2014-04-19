@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 def soupify(url):
     content = get_url_content(url)
-    soup = bs(content)
+    soup = BeautifulSoup(content)
     return soup
 
 def get_url_content(url):

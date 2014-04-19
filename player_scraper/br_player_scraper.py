@@ -27,7 +27,7 @@ def get_row_contents(row):
         cell_contents = cell.text.encode('ascii', 'ignore').strip("%")
         row_contents.append(cell_contents)
 
-    return cell_contents
+    return row_contents
 
 def get_headers(table):
     row = find_header_row(table)
@@ -70,7 +70,7 @@ def get_years(rows):
 def process_table(table):
     stat_dicts = get_rows_as_dicts(table)
     id = table['id']
-    data_frame = build_data_frame_for_table(table)
+    data_frame = build_data_frame_for_table(stat_dicts)
     return id, data_frame
 
 def get_tables(stats_doc):
@@ -87,17 +87,18 @@ def make_player_stats(soup_doc):
     for table in tables:
         id, data_frame = process_table(table)
         processed_tables[id] = data_frame
-        
+
     name = get_player_name(soup_doc)
     stats = PlayerStats(name, processed_tables)
     return stats
 
-def build_data_frame_for_table(table):
+def build_data_frame_for_table(stat_dicts):
     series_dict = {}
-    for stat_dict in table:
+    for stat_dict in stat_dicts:
         year = stat_dict.pop('Season')
         stat_dict.pop("Lg")
         stat_dict.pop("Tm")
+        stat_dict.pop("Pos")
         panda = pd.Series(data=stat_dict, dtype='float')
         series_dict[year] = panda
 
