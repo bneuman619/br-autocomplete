@@ -22,11 +22,12 @@ def find_career_stat_row(table):
     return table.find(class_='stat_total').find_all('td')
 
 def get_row_contents(row):
-    contents = []
+    row_contents = []
     for cell in row:
-        contents.append(cell.text.encode('ascii', 'ignore'))
+        cell_contents = cell.text.encode('ascii', 'ignore').strip("%")
+        row_contents.append(cell_contents)
 
-    return contents
+    return cell_contents
 
 def get_headers(table):
     row = find_header_row(table)
@@ -42,7 +43,7 @@ def get_stat_rows(table):
     return rows
 
 def get_rows_as_dicts(table):
-    stat_rows = get_stat_rows(table) + [get_career_stat_row(table)]
+    stat_rows = get_stat_rows(table)
     headers = get_headers(table)
     dict_rows = []
     for stat_row in stat_rows:
@@ -69,8 +70,8 @@ def get_years(rows):
 def process_table(table):
     stat_dicts = get_rows_as_dicts(table)
     id = table['id']
-    stats_table = StatsTable(stat_dicts, id)
-    return stats_table
+    data_frame = build_data_frame_for_table(table)
+    return id, data_frame
 
 def get_tables(stats_doc):
     tables = stats_doc.find_all('table', id=table_ids)
@@ -81,11 +82,25 @@ def get_player_name(doc):
 
 def make_player_stats(soup_doc):
     tables = get_tables(soup_doc)
-    processed_tables = []
-    for table in tables:
-        processed = process_table(table)
-        processed_tables.append(processed)
+    processed_tables = {}
 
+    for table in tables:
+        id, data_frame = process_table(table)
+        processed_tables[id] = data_frame
+        
     name = get_player_name(soup_doc)
     stats = PlayerStats(name, processed_tables)
     return stats
+
+def build_data_frame_for_table(table):
+    series_dict = {}
+    for stat_dict in table:
+        year = stat_dict.pop('Season')
+        stat_dict.pop("Lg")
+        stat_dict.pop("Tm")
+        panda = pd.Series(data=stat_dict, dtype='float')
+        series_dict[year] = panda
+
+    data_frame = pd.DataFrame(series_dict)
+
+    return data_frame
