@@ -6,6 +6,7 @@ To run it, you need:
 *iPython*  
 *iPython Notebook*  
 *pandas/matplotlib/numpy/etc*
+*sqlalchemy*
 
 Once you get all that working, run the Flask webapp via **'python app.py'**
 
