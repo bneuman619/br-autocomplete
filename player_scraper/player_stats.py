@@ -28,11 +28,7 @@ class PlayerStats:
         return self._lookup_across_tables(stat)
 
     def lookup_by_year(self, year):
-        if year.lower() == 'career':
-            return self.lookup_by_career()
-
-        else:
-            return self._lookup_across_tables(year)
+        return self._lookup_across_tables(year)
 
     def _lookup_across_tables(self, lookup):
         results = []
@@ -42,19 +38,16 @@ class PlayerStats:
                 result = table[lookup]
 
             except KeyError:
-                pass
+                try:
+                    result = table.loc[lookup]
+                
+                except KeyError:
+                    pass
+
+                else:
+                    results.append(result)
 
             else:
                 results.append(result)
-
-        return results
-
-
-    def lookup_by_career(self):
-        results = []
-
-        for table in self.tables:
-            career = table.career_stats()
-            results.append(career)
 
         return results
