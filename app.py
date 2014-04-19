@@ -19,7 +19,10 @@ def player_search():
     notebook_file = open(notebook_filename, 'w')
     notebook_file.write(notebook)
     notebook_file.close
-    return notebook_filename
+
+    notebook_url = "http://localhost:8888/notebooks/%s" % notebook_filename
+
+    return render_template('player_view.html', notebook_url=notebook_url)
 
 if __name__ == "__main__":
     app.debug = True
