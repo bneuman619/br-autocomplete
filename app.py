@@ -1,5 +1,5 @@
 from flask import Flask, url_for, request, render_template
-from player_scraper.br_player_finder import *
+from random import randint
 
 app = Flask(__name__) 
 
@@ -14,8 +14,12 @@ def get_index():
 @app.route("/player_search/")
 def player_search():
     player = request.args.get('player').strip()
-    page = get_player_page(player)
-    return page
+    notebook = render_template('player_notebook_template.ipynb', player=player)
+    notebook_filename = "br_viewer/%d.ipynb" % randint(1, 1000)
+    notebook_file = open(notebook_filename, 'w')
+    notebook_file.write(notebook)
+    notebook_file.close
+    return notebook_filename
 
 if __name__ == "__main__":
     app.debug = True
