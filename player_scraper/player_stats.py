@@ -6,7 +6,7 @@ class PlayerStats:
         self.tables = tables
 
     def __getattr__(self, attr):
-        for table in self.tables:
+        for table_name, table in self.tables:
             if table.name.lower() == attr.lower():
                 return table
 
@@ -33,7 +33,7 @@ class PlayerStats:
     def _lookup_across_tables(self, lookup):
         results = []
 
-        for table in self.tables:
+        for table_name, table in self.tables:
             try:
                 result = table[lookup]
 
