@@ -58,5 +58,3 @@ class PlayerStats:
             results.append(career)
 
         return results
-
-
