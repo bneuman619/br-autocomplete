@@ -1,4 +1,4 @@
-This is a lightweight web app for looking up NBA players on Basketball-Reference.com and doing cool stuff with the data you get back.
+This is a lightweight web app for looking up NBA players on [Basketball Reference](http://basketball-reference.com) and doing cool stuff with the data you get back.
 
 To run it, you need:
 *Python 2.7* 
@@ -13,7 +13,7 @@ Then *run the iPython notebook server via 'ipython notebook'*
 
 When you run the Notebook, make sure you do it from the application's root directory.
 
-Then *navigate to localhost:5000/* in the browser.
+Then *navigate to [*localhost:5000/*](http://localhost:5000/) in the browser.
 
 You can search for NBA players on the index page. Your searches should auto-complete.
 
