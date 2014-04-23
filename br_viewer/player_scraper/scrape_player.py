@@ -1,5 +1,6 @@
 from br_player_finder import get_player_soup
 from db_setup import Session, Player, StatTable, TableType, Year
+from stat_columns import stat_columns
 import re
 
 def scrape_player_to_db(player_name):
@@ -22,7 +23,14 @@ def scrape_player_to_db(player_name):
             row.pop('year')
             session.add(StatTable(**row))
 
-    session.commit()
+    try:
+        session.commit()
+
+    except:
+        raise
+
+    else:
+        return player_id
 
 
 def get_parsed_tables(stats_doc):
@@ -51,7 +59,7 @@ def parse_rows(rows):
 
 def get_parsed_row_contents(row):
     contents = get_row_contents(row)
-    row_dict = dict(zip(stat_columns_db, contents[5:-1]))
+    row_dict = dict(zip(stat_columns, contents[5:]))
     row_dict['year'] = contents[0]
     return row_dict
 
@@ -68,54 +76,3 @@ def get_cell_contents(cell):
 
     return cell_contents
 
-stat_columns_db = [    
-    'games', 
-    'games_started',
-    'minutes_played',
-    'fgs',
-    'fg_attempts',
-    'fg_percent', 
-    'th_fgs',
-    'th_fg_attempts',
-    'th_fg_percent', 
-    'tw_fgs',
-    'tw_fg_attempts',
-    'tw_fg_percent', 
-    'fts',
-    'ft_attempts',
-    'ft_percent', 
-    'off_rebound',
-    'def_rebound',
-    'rebounds',
-    'assists',
-    'steals',
-    'blocks',
-    'turnovers',
-    'fouls',
-    'points']
-
-stat_columns_br = [
-  'G',
-  'GS',
-  'MP',
-  'FG',
-  'FGA',
-  'FG%',
-  '3P',
-  '3PA',
-  '3P%',
-  '2P',
-  '2PA',
-  '2P%',
-  'FT',
-  'FTA',
-  'FT%',
-  'ORB',
-  'DRB',
-  'TRB',
-  'AST',
-  'STL',
-  'BLK',
-  'TOV',
-  'PF',
-  'PTS']

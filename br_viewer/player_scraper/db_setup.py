@@ -2,10 +2,12 @@ import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, Sequence, ForeignKey
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
+import os
 
-engine = sqlalchemy.create_engine('sqlite:///player_db.db', echo=True)
+engine = sqlalchemy.create_engine('sqlite:////users/bneuman/br-suggest/br_viewer/player_scraper/player_db.db', echo=True)
 Base = declarative_base()
 Session = sqlalchemy.orm.sessionmaker(bind=engine)
+
 
 class Player(Base):
     __tablename__ = 'players'
@@ -63,6 +65,5 @@ class StatTable(Base):
     player = relationship("Player", backref=backref('stat_tables', order_by=id))
     year = relationship("Year")
     type = relationship("TableType")
-
 
 Base.metadata.create_all(engine)
