@@ -1,30 +1,8 @@
-from db_setup import Session, Player, StatTable, TableType, Year
-from scrape_player import scrape_player_to_db
-from stat_columns import stat_columns
 import pandas as pd
+from player_scraper import stat_columns
 
-
-SESSION = Session()
-
-def get_player_data(player_name):
-    rows = get_player_rows(player_name)
-    data = PlayerData(player_name, rows)
-    return data
-
-def get_player_rows(player_name):
-    player = SESSION.query(Player).filter(Player.name.like(player_name)).first()
-    rows = lookup_player_stat_rows(player)
-      
-    if not rows:
-        scrape_player_to_db(player_name)
-        rows = lookup_player_stat_rows(player)
-      
-    return rows
-
-def lookup_player_stat_rows(player):
-    rows = SESSION.query(StatTable).filter(StatTable.player_id==player.id).all()
-    return rows
-
+class StatTypeError(Exception):
+    pass
 
 class PlayerData:
     def __init__(self, player_name, rows):
@@ -41,6 +19,37 @@ class PlayerData:
 
         return items
 
+    def get_stat_types(self):
+        return self.columns
+
+    def get_table_types(self):
+        return ['totals', 'per_game', 'per_minute']
+
+    def graph(self, stat_type, table_type):
+        if stat_type not in self.columns:
+            raise StatTypeError
+
+        if table_type == 'totals':
+            self.graph_totals(stat_type)
+
+        elif table_type == 'per_game':
+            self.graph_per_game(stat_type)
+
+        elif table_type == 'per_minute':
+            self.graph_per_mintue(stat_type)
+
+        else:
+            raise StatTypeError
+
+    def graph_totals(self, stat_type):
+        self.get_totals(stat_type).plot()
+
+    def graph_per_game(self, stat_type):
+        self.get_per_game(stat_type).plot()
+
+    def graph_per_minute(self, stat_type):
+        self.get_per_minute(stat_type).plot()
+          
     def get_totals(self, stat):
         return self._get_stat_of_type(stat, 'totals')
 

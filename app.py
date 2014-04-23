@@ -15,7 +15,7 @@ def get_index():
 def player_search():
     player = request.args.get('player').strip()
     notebook = render_template('player_notebook_template.ipynb', player=player)
-    notebook_filename = "br_viewer/%d.ipynb" % randint(1, 1000)
+    notebook_filename = "notebook.ipynb"
     notebook_file = open(notebook_filename, 'w')
     notebook_file.write(notebook)
     notebook_file.close

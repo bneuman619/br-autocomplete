@@ -1,13 +1,12 @@
-import db_setup
 import re
 import httplib2
 from bs4 import BeautifulSoup
-from db_setup import Player
-from db_setup import Session
+from db.setup import *
+from db.models import *
 
 base_url = 'http://www.basketball-reference.com/players/'
 
-def seed():
+def seed_players():
     session = Session()
     links = get_all_links()
     
@@ -61,5 +60,3 @@ def get_url_content(url):
     h = httplib2.Http()
     resp, content = h.request(url)
     return content
-
-seed()

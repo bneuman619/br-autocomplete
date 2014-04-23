@@ -1,3 +1,5 @@
+from db.setup import *
+
 class Player(Base):
     __tablename__ = 'players'
 

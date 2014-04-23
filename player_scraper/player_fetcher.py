@@ -1,5 +1,5 @@
-from soupify import soupify, get_url_content
-from db_setup import Player, Session
+from soupify import soupify
+from db import Player, Session
 
 session = Session()
 

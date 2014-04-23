@@ -1,3 +1,5 @@
+from db.setup import *
+
 class StatTable(Base):
     __tablename__ = 'stats'
 

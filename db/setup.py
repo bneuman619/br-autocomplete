@@ -6,8 +6,3 @@ from sqlalchemy.ext.declarative import declarative_base
 engine = sqlalchemy.create_engine('sqlite:///player_db.db', echo=True)
 Base = declarative_base()
 Session = sqlalchemy.orm.sessionmaker(bind=engine)
-
-from models import *
-
-
-Base.metadata.create_all(engine)
