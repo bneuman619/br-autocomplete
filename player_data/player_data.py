@@ -36,7 +36,7 @@ class PlayerData:
             self.graph_per_game(stat_type)
 
         elif table_type == 'per_minute':
-            self.graph_per_mintue(stat_type)
+            self.graph_per_minute(stat_type)
 
         else:
             raise StatTypeError
@@ -66,8 +66,8 @@ class PlayerData:
         stats = {}
 
         for row in self.rows:
-            if (row.type.type_name.lower() == stat_type):
-                stats[row.year.year] = row.__dict__[stat]
+            if (row['type'].lower() == stat_type):
+                stats[row['year']] = row[stat]
 
         stats_series = pd.Series(stats)
         return stats_series        

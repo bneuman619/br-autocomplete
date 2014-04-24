@@ -6,7 +6,8 @@ session = Session()
 
 def get_player_data(player_name):
     rows = get_player_rows(player_name)
-    data = PlayerData(player_name, rows)
+    row_dicts = [row_to_dict(row, player_name) for row in rows]
+    data = PlayerData(player_name, row_dicts)
     return data
 
 def get_player_rows(player_name):
@@ -22,3 +23,11 @@ def get_player_rows(player_name):
 def lookup_player_stat_rows(player):
     rows = session.query(StatTable).filter(StatTable.player_id==player.id).all()
     return rows
+
+
+def row_to_dict(row, player_name):
+    output_dict = row.__dict__
+    output_dict['year'] = row.year.year
+    output_dict['type'] = row.type.type_name
+    output_dict['player'] = player_name
+    return output_dict
