@@ -7,10 +7,17 @@
 input{font-size:1.3em;}
 #log{position: absolute; top: 10px; right: 10px;}
 span{color:blue; text-decoration: underline; cursor: pointer;}
+
+#notebook {
+  width: 95%;
+  height: 95%;
+}
+
+
 </style>
 </head>
 <body>
-<form action="/player_search" method="get">
+<form id="player" action="/player_search" method="get">
   <div id="input">
     <input type="text" name="player"></input>
   </div>
@@ -23,6 +30,27 @@ span{color:blue; text-decoration: underline; cursor: pointer;}
 <script>
   var input = $("#input input");
   input.googleSuggest({ service: "web" });
+
+  $("#player").on('submit', function() {
+    var player = $("#player #input input").val();
+
+    $.ajax({
+      type: 'get',
+      url: '/player_search/',
+      data: {
+        player: player
+      },
+      success: function(response) {
+        console.log(response);
+        $("#notebook").html(response);
+      }
+    })
+    event.preventDefault();
+  })
 </script>
+
+<div id="notebook">
+</div>
+
 </body>
 </html>
