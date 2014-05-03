@@ -28,7 +28,7 @@ def player_search():
     notebook_file.close
     notebook_url = "http://localhost:8888/notebooks/%s" % notebook_filename
 
-    return render_template('player_view.html', notebook_url=notebook_url)
+    return render_template('_player_view.html', notebook_url=notebook_url)
 
 if __name__ == "__main__":
     app.debug = True
