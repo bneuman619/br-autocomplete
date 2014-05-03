@@ -1,4 +1,6 @@
 *.pyc
+.Python
+.git
 bin/
 include/
 lib/
