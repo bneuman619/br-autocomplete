@@ -8,7 +8,7 @@ class PlayerData:
     def __init__(self, player_name, rows):
         self.name = player_name
         self.rows = rows
-        self.columns = stat_columns
+        self.columns = rows[0].keys()
 
     def __getitem__(self, key):
         items = []
