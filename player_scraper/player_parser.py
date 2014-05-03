@@ -23,13 +23,23 @@ def get_rows(table):
 
 def parse_rows(rows):
     parsed_rows = [get_parsed_row_contents(row) for row in rows]
+
     return parsed_rows
+
+def remove_empty_entries_from_row(row):
+    new_row = {}
+
+    for key in row:
+        if row[key].strip():
+            new_row[key] = row[key]
+    return new_row 
 
 def get_parsed_row_contents(row):
     contents = get_row_contents(row)
     row_dict = dict(zip(stat_columns, contents[5:]))
     row_dict['year'] = contents[0]
-    return row_dict
+    trimmed_row_dict = remove_empty_entries_from_row(row_dict)
+    return trimmed_row_dict
 
 def get_row_contents(row):
     cells = row.find_all('td')
@@ -40,7 +50,7 @@ def get_cell_contents(cell):
     cell_contents = cell.text.encode('ascii', 'ignore')
 
     if re.match('\.\d+$', cell_contents):
-        cell_contents = int(float(cell_contents) * 100)
+        cell_contents = str(float(cell_contents) * 100)
 
     return cell_contents
 
