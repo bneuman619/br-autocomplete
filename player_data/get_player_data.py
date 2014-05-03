@@ -30,4 +30,14 @@ def row_to_dict(row, player_name):
     output_dict['year'] = row.year.year
     output_dict['type'] = row.type.type_name
     output_dict['player'] = player_name
+    output_dict = remove_empties(output_dict)
     return output_dict
+
+def remove_empties(row):
+    new_row = {}
+
+    for key in row:
+        if row[key]:
+            new_row[key] = row[key]
+
+    return new_row
