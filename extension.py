@@ -4,15 +4,8 @@ def load_ipython_extension(ipython):
     ipython.run_cell("players = []", silent=True)
     ipython.run_cell("from player_data import get_player_data", silent=True)
     ipython.run_cell(get_html(), silent=True)
-    ipython.run_cell(get_googleSuggest_js(), silent=True)
-    ipython.run_cell(get_event_js(), silent=True)
-
-
-def get_googleSuggest_js():
-    js_file = open('googleSuggest.js')
-    js = ''.join(js_file.readlines())
-    js_file.close()
-    return js
+    ipython.run_cell(make_javascript_cell('googleSuggest.js'), silent=True)
+    ipython.run_cell(make_javascript_cell('eventHandlers.js'), silent=True)
 
 def get_html():
     html1 = "<form id='player' action='/player_search' method='get'>"
@@ -21,8 +14,9 @@ def get_html():
     html_cell = "display(HTML(%s))" % html
     return html_cell
 
-def get_event_js():
-    js_file = open('eventHandlers.js')
+def make_javascript_cell(js_filename):
+    js_file = open(js_filename)
     js = ''.join(js_file.readlines())
     js_file.close()
-    return js
+    js_cell = "%%javascript\n\n  " + js
+    return js_cell
