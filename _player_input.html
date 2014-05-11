@@ -1,7 +1,13 @@
-<form id='player' action='/player_search' method='get'>
-  <div id='input'>
-    <input type='text' name='player'></input>
-  </div>
+<div id='player_selection'>
+  <form id='player'>
+    <div id='input'>
+      <input type='text' name='player'></input>
+    </div>
+    <input type='submit' />
+  </form>
 
-  <input type='submit' />
-</form>
+  <form id='current_players'>
+    <select name='player_list' size='3'></select>
+    <input type='submit' value='Delete Player' />
+  </form>
+</div>

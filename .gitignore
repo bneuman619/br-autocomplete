@@ -6,3 +6,4 @@ include/
 lib/
 man/
 share/
+.ipynb_checkpoints/
